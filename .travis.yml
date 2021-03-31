@@ -11,4 +11,4 @@ deploy:
     skip_cleanup: true
     script: yarn prepare
     on:
-      branch: master
+      branch: main
