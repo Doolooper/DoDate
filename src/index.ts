@@ -57,7 +57,7 @@ class DoDate {
      * @param {string} pattern pattern that match the date
      * @returns {DoDate} create a instance of DoDate from provided value
      */
-    public static parse(date: string, pattern: string = "YYYY-MM-DD hh:mm:ss"): DoDate {
+    public static parse(date: string, pattern: string = "YYYY-MM-DDTHH:mm:ss"): DoDate {
         const [y, m, d, h, min, sec] = this.parseFormat(date, pattern, "geo");
         return new DoDate(new Date(y, m - 1, d, h, min, sec));
     }
@@ -67,7 +67,7 @@ class DoDate {
      * @param {string} pattern pattern that match the date
      * @returns {DoDate} create a instance of DoDate from provided value
      */
-    public static parseJalali(date: string, pattern: string = "YYYY-MM-DD hh:mm:ss"): DoDate {
+    public static parseJalali(date: string, pattern: string = "YYYY-MM-DDTHH:mm:ss"): DoDate {
         const [y, m, d, h, min, sec] = this.parseFormat(date, pattern, "jal");
         const x = jalaali.toGregorian(y, m, d);
         const outPut = new DoDate(new Date(x.gy, x.gm - 1, x.gd, h, min, sec));
