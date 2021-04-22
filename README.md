@@ -4,9 +4,7 @@
 [![npm](https://img.shields.io/npm/v/@doolooper/dodate?style=flat-square)](https://www.npmjs.com/package/@doolooper/dodate)
 ![npm](https://img.shields.io/npm/l/@doolooper/dodate?style=flat-square)   
 
-![npm](https://img.shields.io/npm/dt/@doolooper/dodate?style=flat-square) ![npm bundle size](https://img.shields.io/bundlephobia/min/@doolooper/dodate?style=flat-square) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@doolooper/dodate?style=flat-square)
-
-![npm dependency](https://img.shields.io/librariesio/release/npm/@doolooper/dodate?style=flat-square)
+![npm](https://img.shields.io/npm/dt/@doolooper/dodate?style=flat-square) ![npm bundle size](https://img.shields.io/bundlephobia/min/@doolooper/dodate?style=flat-square) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@doolooper/dodate?style=flat-square) ![npm dependency](https://img.shields.io/librariesio/release/npm/@doolooper/dodate?style=flat-square)
 
 ### A simple immutable solution to jalali/shamsi date without timezone
 
