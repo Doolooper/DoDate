@@ -16,14 +16,30 @@ dayjs.extend(dayOfYear);
 type CalendarType = "jal" | "geo";
 
 class DoDate {
+    /**
+     * @returns {DoDate} create a instance of DoDate of current date and time
+     */
     public static now(): DoDate {
         return new DoDate();
     }
 
+    /**
+     * @param {Date} date value
+     * @returns {DoDate} create a instance of DoDate from provided date
+     */
     public static fromDate(date: Date): DoDate {
         return new DoDate(date);
     }
 
+    /**
+     * @param {number} year year of jalali date
+     * @param {number} month month of jalali date
+     * @param {number} day day of jalali date
+     * @param {number} hour year of jalali date
+     * @param {number} minute month of jalali date
+     * @param {number} second day of jalali date
+     * @returns {DoDate} create a instance of DoDate from provided jalali date
+     */
     public static fromJalali(
         year: number,
         month: number,
@@ -36,11 +52,21 @@ class DoDate {
         return new DoDate(new Date(x.gy, x.gm - 1, x.gd, hour, minute, second));
     }
 
+    /**
+     * @param {string} date string value that represents a date
+     * @param {string} pattern pattern that match the date
+     * @returns {DoDate} create a instance of DoDate from provided value
+     */
     public static parse(date: string, pattern: string = "YYYY-MM-DD hh:mm:ss"): DoDate {
         const [y, m, d, h, min, sec] = this.parseFormat(date, pattern, "geo");
         return new DoDate(new Date(y, m - 1, d, h, min, sec));
     }
 
+    /**
+     * @param {string} date string value that represents a date
+     * @param {string} pattern pattern that match the date
+     * @returns {DoDate} create a instance of DoDate from provided value
+     */
     public static parseJalali(date: string, pattern: string = "YYYY-MM-DD hh:mm:ss"): DoDate {
         const [y, m, d, h, min, sec] = this.parseFormat(date, pattern, "jal");
         const x = jalaali.toGregorian(y, m, d);
@@ -48,6 +74,10 @@ class DoDate {
         return outPut;
     }
 
+    /**
+     * @param {(Date | number)} date given date or year
+     * @returns {boolean} true if year is leap
+     */
     public static isLeapYear(date: Date | number): boolean {
         if (typeof date === "number") {
             return dayjs(new Date(date, 2, 2)).isLeapYear();
@@ -55,6 +85,10 @@ class DoDate {
         return dayjs(date).isLeapYear();
     }
 
+    /**
+     * @param {(Date | number)} date given date or year
+     * @returns {boolean} true if year is leap
+     */
     public static isLeapYearJalali(date: Date | number): boolean {
         if (typeof date === "number") {
             return jalaali.isLeapJalaaliYear(date);
@@ -185,54 +219,93 @@ class DoDate {
         }
     }
 
+    /**
+     * @returns {Date} current value as date
+     */
     public getDate(): Date {
         return this.date;
     }
 
+    /**
+     * @returns {number} value of year
+     */
     public getYear(): number {
         return this.year;
     }
 
+    /**
+     * @returns {number} value of jalali year
+     */
     public getYearJalali(): number {
         return this.yearJalali;
     }
 
+    /**
+     * @returns {number} value of month
+     */
     public getMonth(): number {
         return this.month;
     }
 
+    /**
+     * @returns {number} value of jalali month
+     */
     public getMonthJalali(): number {
         return this.monthJalali;
     }
 
+    /**
+     * @returns {number} value of day
+     */
     public getDay(): number {
         return this.day;
     }
 
+    /**
+     * @returns {number} value of jalali day
+     */
     public getDayJalali(): number {
         return this.dayJalali;
     }
 
+    /**
+     * @returns {number} value of hour
+     */
     public getHour(): number {
         return this.hour;
     }
 
+    /**
+     * @returns value of minute
+     */
     public getMinute(): number {
         return this.minute;
     }
 
+    /**
+     * @returns {number} value of second
+     */
     public getSecond(): number {
         return this.second;
     }
 
+    /**
+     * @returns {boolean} true if current instance hold valid date
+     */
     public isValid(): boolean {
         return this.hasValidValue;
     }
 
+    /**
+     * @returns {number} number of day of week
+     */
     public dayOfWeek(): number {
         return dayjs(this.date).day();
     }
 
+    /**
+     * @returns {number} number of jalali day of week
+     */
     public dayOfWeekJalali(): number {
         const day = dayjs(this.date).day();
         switch (day) {
@@ -270,10 +343,16 @@ class DoDate {
         }
     }
 
+    /**
+     * @returns {number} number of day in year
+     */
     public dayOfYear(): number {
         return dayjs(this.date).dayOfYear();
     }
 
+    /**
+     * @returns {number} number of jalali day in year
+     */
     public dayOfYearJalali(): number {
         const jd = jalaali.j2d(this.yearJalali, 1, 1);
         const jdCurrent = jalaali.j2d(this.yearJalali, this.monthJalali, this.dayJalali);
@@ -281,23 +360,41 @@ class DoDate {
         return jdCurrent - jd + 1;
     }
 
+    /**
+     * @returns {number} number of week in year
+     */
     public weekOfYear(): number {
         return dayjs(this.date).week();
     }
 
+    /**
+     * @returns {number} number of jalali week in year
+     */
     public weekOfYearJalali(): number {
         const dayOfYear = this.dayOfYearJalali();
         return Math.floor((dayOfYear + 6) / 7);
     }
 
+    /**
+     * @param {number} days number of days to add
+     * @returns {DoDate} new instance of DoDate with added value
+     */
     public addDays(days: number): DoDate {
         return new DoDate(dayjs(this.date).add(days, "day").toDate());
     }
 
+    /**
+     * @param days number of days to sub
+     * @returns new instance of DoDate with subbed value
+     */
     public subDays(days: number): DoDate {
         return new DoDate(dayjs(this.date).add(days, "day").toDate());
     }
 
+    /**
+     * @param {number} days number of jalali days to add
+     * @returns {DoDate}  instance of DoDate with added value
+     */
     public addJalaliDays(days: number): DoDate {
         const jd = jalaali.j2d(this.yearJalali, this.monthJalali, this.dayJalali);
         const newDay = jd + days;
@@ -305,6 +402,10 @@ class DoDate {
         return DoDate.fromJalali(newDate.jy, newDate.jm, newDate.jd, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @param {number} days number of jalali days to add
+     * @returns {DoDate} new instance of DoDate with subbed value
+     */
     public subJalaliDays(days: number): DoDate {
         const jd = jalaali.j2d(this.yearJalali, this.monthJalali, this.dayJalali);
         const newDay = jd - days;
@@ -312,14 +413,26 @@ class DoDate {
         return DoDate.fromJalali(newDate.jy, newDate.jm, newDate.jd, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @param {number} months number of month to add
+     * @returns {DoDate} new instance of DoDate with added value
+     */
     public addMonths(months: number): DoDate {
         return new DoDate(dayjs(this.date).add(months, "month").toDate());
     }
 
+    /**
+     * @param {number} months number of month to sun
+     * @returns {DoDate} new instance of DoDate with subbed value
+     */
     public subMonths(months: number): DoDate {
         return new DoDate(dayjs(this.date).add(months, "month").toDate());
     }
 
+    /**
+     * @param {number} months number of jalali month to add
+     * @returns {DoDate} new instance of DoDate with added value
+     */
     public addJalaliMonths(months: number): DoDate {
         if (this.monthJalali + months > 12) {
             const y = Math.floor((this.monthJalali + months) / 12);
@@ -333,6 +446,10 @@ class DoDate {
         }
     }
 
+    /**
+     * @param {number} months number of jalali month to sub
+     * @returns {DoDate} new instance of DoDate with subbed value
+     */
     public subJalaliMonths(months: number): DoDate {
         if (this.monthJalali - months < 0) {
             const y = Math.floor((this.monthJalali + months) / 12);
@@ -346,43 +463,77 @@ class DoDate {
         }
     }
 
+    /**
+     * @param {number} years number of year to add
+     * @returns {DoDate} new instance of DoDate with added value
+     */
     public addYears(years: number): DoDate {
         return new DoDate(dayjs(this.date).add(years, "year").toDate());
     }
 
+    /**
+     * @param {number} years number of jalali year to sun
+     * @returns {DoDate} new instance of DoDate with subbed value
+     */
     public subYears(years: number): DoDate {
         return new DoDate(dayjs(this.date).add(years, "year").toDate());
     }
 
+    /**
+     * @param {number} years number of year to add
+     * @returns {DoDate} new instance of DoDate with added value
+     */
     public addJalaliYears(years: number): DoDate {
         const newYear = this.yearJalali + years;
         return DoDate.fromJalali(newYear, this.monthJalali, this.dayJalali, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @param {number} years number of jalali year to sun
+     * @returns {DoDate} new instance of DoDate with subbed value
+     */
     public subJalaliYears(years: number): DoDate {
         const newYear = this.yearJalali - years;
         return DoDate.fromJalali(newYear, this.monthJalali, this.dayJalali, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @returns {DoDate} new instance of DoDate with start of month of current date
+     */
     public startOfMonth(): DoDate {
         return new DoDate(dayjs(this.date).startOf("month").toDate());
     }
 
+    /**
+     * @returns {DoDate} new instance of DoDate with end of month of current date
+     */
     public endOfMonth(): DoDate {
         return new DoDate(dayjs(this.date).endOf("month").toDate());
     }
 
+    /**
+     * @returns {DoDate} new instance of DoDate with start of jalali month of current date
+     */
     public startOfMonthJalali(): DoDate {
         const [jy, jm] = this.getJalali();
         return DoDate.fromJalali(jy, jm, 1);
     }
 
+    /**
+     * @returns {DoDate} new instance of DoDate with end of jalali month of current date
+     */
     public endOfMonthJalali(): DoDate {
         const [jy, jm] = this.getJalali();
         const ml = jalaali.jalaaliMonthLength(jy, jm);
         return DoDate.fromJalali(jy, jm, ml);
     }
 
+    /**
+     * check whether is date after current date or not
+     * @param {(Date | DoDate)} date value to compare
+     * @param {boolean} onlyDate only date part should be compared
+     * @returns {boolean}  if current date is greater than provided date
+     */
     public isAfter(date: Date | DoDate, onlyDate: boolean = false): boolean {
         const d1: Date = this.date;
         let d2: Date | undefined;
@@ -399,6 +550,12 @@ class DoDate {
         return dayjs(d1).isAfter(dayjs(d2), "second");
     }
 
+    /**
+     * check whether is date after or equal to current date or not
+     * @param {(Date | DoDate)} date  value to compare
+     * @param {boolean} onlyDate only date part should be compared
+     * @returns {boolean} true if current date is after or equal
+     */
     public isAfterOrEqual(date: Date | DoDate, onlyDate: boolean = false): boolean {
         const d1: Date = this.date;
         let d2: Date | undefined;
@@ -414,6 +571,12 @@ class DoDate {
         return dayjs(d1).isSameOrAfter(dayjs(d2));
     }
 
+    /**
+     * check whether is date before to current date or not
+     * @param {(Date | DoDate)} date  value to compare
+     * @param {boolean} onlyDate only date part should be compared
+     * @returns {boolean} true if current date is before
+     */
     public isBefore(date: Date | DoDate, onlyDate: boolean = false): boolean {
         const d1: Date = this.date;
         let d2: Date | undefined;
@@ -429,6 +592,12 @@ class DoDate {
         return dayjs(d1).isBefore(dayjs(d2));
     }
 
+    /**
+     * check whether is date before or equal to current date or not
+     * @param {(Date | DoDate)} date  value to compare
+     * @param {boolean} onlyDate only date part should be compared
+     * @returns {boolean} true if current date is before or equal
+     */
     public isBeforeOrEqual(date: Date | DoDate, onlyDate: boolean = false): boolean {
         const d1: Date = this.date;
         let d2: Date | undefined;
@@ -444,19 +613,41 @@ class DoDate {
         return dayjs(d1).isSameOrBefore(dayjs(d2));
     }
 
+    /**
+     * check whether is date equal to current date or not
+     * @param {(Date | DoDate)} date  value to compare
+     * @param {boolean} onlyDate only date part should be compared
+     * @returns {boolean} true if current date is equal
+     */
+    public isEqual(date: Date | DoDate, onlyDate: boolean = false): boolean {
+        const d1: Date = this.date;
+        let d2: Date | undefined;
+        if (date instanceof Date) {
+            d2 = date;
+        } else {
+            d2 = date.date;
+        }
+        if (onlyDate) {
+            d1.setHours(0, 0, 0, 0);
+            d2.setHours(0, 0, 0, 0);
+        }
+        return dayjs(d1).isSame(dayjs(d2));
+    }
+
+    /**
+     * format current value
+     * @param {string} pattern  value to compare
+     * @returns {string} formatted date
+     */
     public format(pattern: string): string {
         return dayjs(this.date).format(pattern);
     }
 
-    public isLeapYear(): boolean {
-        return dayjs(this.date).isLeapYear();
-    }
-
-    public isLeapYearJalali(): boolean {
-        const jd = jalaali.toJalaali(this.date);
-        return jalaali.isLeapJalaaliYear(jd.jy);
-    }
-
+    /**
+     * format current value
+     * @param {string} pattern  value to compare
+     * @returns {string} formatted date
+     */
     public formatJalali(pattern: string): string {
         const [jy, jm, jd] = this.getJalali();
         pattern = pattern.replace(/YYYY/g, `${jy}`);
@@ -493,44 +684,95 @@ class DoDate {
         return pattern;
     }
 
+    /**
+     * @returns {boolean} true if current year is leap
+     */
+    public isLeapYear(): boolean {
+        return dayjs(this.date).isLeapYear();
+    }
+
+    /**
+     * @returns {boolean} true if current year is leap
+     */
+    public isLeapYearJalali(): boolean {
+        const jd = jalaali.toJalaali(this.date);
+        return jalaali.isLeapJalaaliYear(jd.jy);
+    }
+
+    /**
+     * @param {number} year the value to set
+     * @returns {DoDate} return new value with year provided
+     */
     public setYear(year: number): DoDate {
         return new DoDate(dayjs(this.date).set("year", year).toDate());
     }
 
+    /**
+     * @param {number} month the value to set
+     * @returns {DoDate} return new value with month provided
+     */
     public setMonth(month: number): DoDate {
         return new DoDate(dayjs(this.date).set("month", month).toDate());
     }
 
+    /**
+     * @param {number} day the value to set
+     * @returns {DoDate} return new value with day provided
+     */
     public setDay(day: number): DoDate {
         return new DoDate(dayjs(this.date).set("day", day).toDate());
     }
 
+    /**
+     * @param {number} year the value to set
+     * @returns {DoDate} return new value with year provided
+     */
     public setJalaliYear(year: number): DoDate {
         return DoDate.fromJalali(year, this.monthJalali, this.dayJalali, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @param {number} month the value to set
+     * @returns {DoDate} return new value with month provided
+     */
     public setJalaliMonth(month: number): DoDate {
         return DoDate.fromJalali(this.yearJalali, month, this.dayJalali, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @param {number} day the value to set
+     * @returns {DoDate} return new value with day provided
+     */
     public setJalaliDay(day: number): DoDate {
         return DoDate.fromJalali(this.yearJalali, this.monthJalali, day, this.hour, this.minute, this.second);
     }
 
+    /**
+     * @param {number} hour the value to set
+     * @returns {DoDate} return new value with hour provided
+     */
     public setHour(hour: number): DoDate {
         return new DoDate(dayjs(this.date).set("hour", hour).toDate());
     }
 
+    /**
+     * @param {number} minute the value to set
+     * @returns {DoDate} return new value with minute provided
+     */
     public setMinute(minute: number): DoDate {
         return new DoDate(dayjs(this.date).set("minute", minute).toDate());
     }
 
+    /**
+     * @param {number} second the value to set
+     * @returns {DoDate} return new value with second provided
+     */
     public setSecond(second: number): DoDate {
         return new DoDate(dayjs(this.date).set("second", second).toDate());
     }
 
     public toString(): string {
-        return this.date.toString();
+        return this.format("YYYY-MM-DDTHH:mm:ss.000");
     }
 
     public toJSON(): string {
