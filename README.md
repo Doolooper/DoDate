@@ -8,7 +8,7 @@
 
 ### A simple immutable solution to jalali/shamsi date without timezone
 
-# :warning: if use pass date with time zone you will get different values :boom:
+# :warning: if you use date with time zone you will get different values :boom:
 
 ```ts
 DoDate.now();
