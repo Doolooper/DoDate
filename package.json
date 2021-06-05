@@ -19,24 +19,24 @@
         "dist/**/*"
     ],
     "dependencies": {
-        "dayjs": "1.10.4",
+        "dayjs": "1.10.5",
         "jalaali-js": "1.1.5"
     },
     "devDependencies": {
-        "@types/chai": "4.2.17",
+        "@types/chai": "4.2.18",
         "@types/jalaali-js": "1.1.0",
         "@types/mocha": "8.2.2",
-        "@typescript-eslint/eslint-plugin": "4.22.1",
-        "@typescript-eslint/parser": "4.22.1",
+        "@typescript-eslint/eslint-plugin": "4.26.0",
+        "@typescript-eslint/parser": "4.26.0",
         "chai": "4.3.4",
-        "eslint": "7.25.0",
+        "eslint": "7.28.0",
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "3.4.0",
-        "mocha": "8.3.2",
-        "prettier": "2.2.1",
+        "mocha": "8.4.0",
+        "prettier": "2.3.0",
         "rimraf": "3.0.2",
-        "ts-node": "9.1.1",
-        "typescript": "4.2.4"
+        "ts-node": "10.0.0",
+        "typescript": "4.3.2"
     },
     "scripts": {
         "clean": "rimraf ./dist",
