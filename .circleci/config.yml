@@ -5,6 +5,7 @@ version: 2.1
 # See: https://circleci.com/docs/orb-intro/
 orbs:
   node: circleci/node@4.7
+  codecov: codecov/codecov@3.2.4
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
