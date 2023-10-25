@@ -1,6 +1,6 @@
 {
     "name": "@doolooper/dodate",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "A simple immutable solution to jalali/shamsi date without timezone",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
