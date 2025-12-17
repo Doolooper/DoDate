@@ -40,15 +40,14 @@
     },
     "scripts": {
         "clean": "rimraf ./dist",
-        "build": "yarn clean && tsc",
+        "build": "npm run clean && tsc",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "eslint \"src/**/*.ts\"",
         "test": "mocha -r ts-node/register test/**/*.test.ts",
-        "prepare": "yarn build",
-        "prepublishOnly": "yarn test && yarn lint",
-        "preversion": "yarn lint",
-        "version": "yarn format && git add -A src",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run test && npm run lint",
+        "preversion": "npm run lint",
+        "version": "npm run format && git add -A src",
         "postversion": "git push && git push --tags"
-    },
-    "packageManager": "yarn@1.22.22+sha256.c17d3797fb9a9115bf375e31bfd30058cac6bc9c3b8807a3d8cb2094794b51ca"
+    }
 }
